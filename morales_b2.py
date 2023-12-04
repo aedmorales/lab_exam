@@ -1,16 +1,12 @@
-import csv
+import pandas as pd
 
-def extract_rows_by_starting_letter(file_path, column, start_letter):
-    extracted_rows = []
-    with open(file_path, 'r', newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row.get(column, '').startswith(start_letter):
-                extracted_rows.append(row)
-    return extracted_rows
+input_file = 'Exam_Table.csv'
+output_file = 'b2_output2.csv'
 
-file_path = 'Exam_Table.csv'
-result = extract_rows_by_starting_letter(file_path, 'Genus', 'St')
+df = pd.read_csv(input_file)
 
-for row in result:
-    print(row)
+filtered_df = df[df['Genus'].str.lower().str.startswith('st', na=False)]
+
+filtered_df.to_csv(output_file, index=False)
+
+print(f"Filtered rows saved to {output_file}")
