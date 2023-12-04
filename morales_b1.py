@@ -1,16 +1,12 @@
-import csv
+import pandas as pd
 
-def extract_rows_by_value(file_path, column, value):
-    extracted_rows = []
-    with open(file_path, 'r', newline='') as csvfile:
-        reader = csv.DictReader(csvfile)
-        for row in reader:
-            if row.get(column) == value:
-                extracted_rows.append(row)
-    return extracted_rows
+input_file = 'Exam_Table.csv'
+output_file = 'b1_output1.csv'
 
-file_path = 'Exam_Table.csv'
-result = extract_rows_by_value(file_path, 'Interval', '30-0')
+df = pd.read_csv(input_file)
 
-for row in result:
-    print(row)
+filtered_df = df[df['Interval'] == '30-0']
+
+filtered_df.to_csv(output_file, index=False)
+
+print(f"Filtered rows saved to {output_file}")
